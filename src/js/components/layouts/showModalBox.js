@@ -5,9 +5,12 @@ export default class ShowModalBox extends React.Component {
   super(props);
   this.state = {
     details:{
-      booktitle: this.props.title,
-      imageurl:this.props.imageurl,
-      productid:this.props.productid,
+      bookname: this.props.bookname,
+      classes:this.props.classes,
+      price:this.props.price,
+      image:this.props.image,
+      id:this.props.id,
+      description:this.props.description
     }
   }
   this.handleChange = this.handleChange.bind(this);
@@ -36,10 +39,13 @@ export default class ShowModalBox extends React.Component {
           <h4 class="modal-title">Edit the {this.props.productid}</h4>
         </div>
         <div class="modal-body">
-          <p>
-          Title:    <input placeholder={this.props.title}  onChange={this.handleChange.bind(this,"booktitle")} class="form-control"/><br></br>
-        image Url: <input placeholder={this.props.imageurl}  onChange={this.handleChange.bind(this,"imageurl")} class="form-control"/>
-        </p>
+          <div>
+          <input placeholder={this.props.classes}  onChange={this.handleChange.bind(this,"classes")} class="form-control"/>
+          <input placeholder={this.props.bookname}  onChange={this.handleChange.bind(this,"bookname")} class="form-control"/>
+          <input placeholder={this.props.price}  onChange={this.handleChange.bind(this,"price")} class="form-control"/>
+          <input placeholder={this.props.image}   onChange={this.handleChange.bind(this,'image')} class="form-control"/>
+          <input placeholder={this.props.description}   onChange={this.handleChange.bind(this,"description")} class="form-control"/>
+        </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal" onClick={this.handleSubmit}>Submit</button>

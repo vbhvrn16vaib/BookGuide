@@ -6,6 +6,12 @@ export const GET_BOOK_API = `${api_url}/books`;
 export const DELETE_BOOK_API = `${api_url}/delete/`;
 export const EDIT_BOOK_API = `${api_url}/editbook/`;
 export const ADD_BOOK_API = `${api_url}/addbook`;
+export const UPLOAD_BOOK_API = `${api_url}/addFiles`;
+export const SEARCH_BOOK_API = `${api_url}/find/`
+
+export const formdata = new FormData();
+export const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+
 
 export function getBooksActions() {
   return function(dispatch){
@@ -14,6 +20,18 @@ export function getBooksActions() {
         dispatch({type: "FETCH_TWEETS_FULFILLED",payload: response.data})
       }).catch((err)=>{
         dispatch({type: "FETCH_TWEETS_REJECTED",payload:err})
+      })
+    };
+}
+
+export function findBooksActions(query) {
+  console.log(query);
+  return function(dispatch){
+      axios.get(SEARCH_BOOK_API+query)
+      .then((response) => {
+        dispatch({type: "FIND_BOOKS_FULFILLED",payload: response.data})
+      }).catch((err)=>{
+        dispatch({type: "FIND_BOOKS_REJECTED",payload:err})
       })
     };
 }
@@ -47,6 +65,19 @@ export function addBookActions(details) {
         dispatch({type: "ADD_FULFILLED",payload: response.data});
       }).catch((err)=>{
         dispatch({type: "ADD_REJECTED",payload:err})
+      })
+    };
+}
+
+export function uploadBookImage(file){
+  formdata.set('file', file[0]);
+  window.formdata = formdata;
+  return function(dispatch){
+      axios.post(UPLOAD_BOOK_API,formdata,config)
+      .then((response) => {
+        dispatch({type: "UPLOAD_FULFILLED",payload: response.data});
+      }).catch((err)=>{
+        dispatch({type: "UPLOAD_REJECTED",payload:err})
       })
     };
 }

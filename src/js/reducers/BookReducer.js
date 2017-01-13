@@ -15,13 +15,19 @@ export default function reducer(state={
         return {...state, fetching: true,books: action.payload,}
       }
       case "DELETE_FULFILLED": {
-        return {...state,fetching: true, output: action.payload,}
+        return {...state,fetching: true, books: action.payload,}
       }
       case "EDIT_FULFILLED":{
-        return {...state,fetching: true, output: action.payload,}
+        return {...state,fetching: true, books: action.payload,}
       }
       case "ADD_FULFILLED":{
+        return {...state,fetching: true, books: action.payload,}
+      }
+      case "UPLOAD_FULFILLED":{
         return {...state,fetching: true, output: action.payload,}
+      }
+      case "FIND_BOOKS_FULFILLED":{
+        return {...state,fetching: true, books: action.payload,}
       }
     }
 

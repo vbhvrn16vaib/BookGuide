@@ -4,9 +4,9 @@ import { observable } from "mobx";
 
 // import { fetchUser } from "../actions/userActions";
 // import { fetchTweets } from "../actions/tweetsActions";
-import {getBooksActions,deleteBooksActions,editBooksActions,addBookActions} from "../actions/BooksActions";
+import {getBooksActions,deleteBooksActions,editBooksActions,addBookActions,findBooksActions,api_url} from "../actions/BooksActions";
 import DisplayBookLists from "./layouts/displayBookLists";
-import ShowModalBox from "./layouts/ShowModalBox";
+import ShowModalBox from "./layouts/showModalBox";
 import ShowAddModalBox from "./layouts/ShowAddModalBox";
 
 @connect((store) => {
@@ -27,10 +27,15 @@ export default class BookDisplay extends React.Component {
    }
 
    this.editBooks = this.editBooks.bind(this);
+   this.deleteBooks = this.deleteBooks.bind(this);
  }
 
   componentWillMount() {
     this.props.dispatch(getBooksActions())
+  }
+
+  componentWillUpdate(nextProps,nextState){
+    console.log(nextProps);
   }
 
   componentWillUnmount(){
@@ -49,18 +54,25 @@ export default class BookDisplay extends React.Component {
     this.props.dispatch(addBookActions(newBook));
   }
 
+  searchClass(event){
+    const a = event.target.value
+    this.props.dispatch(findBooksActions(a));
+    event.preventDefault();
+  }
+
   render() {
+    console.log(this.props);
     const { books } = this.props;
 
     const bookList = books.map(book =>
-    <tr>
-    <td><img src={book.image} height="42" width="42"></img></td>
+    <tr key={book.id}>
+    <td><img src={api_url + book.image} height="42" width="42"></img></td>
     <td>{book.classes}</td>
     <td>{book.bookname}</td>
     <td>&#x20B9; {book.price}</td>
     <td>{book.description}</td>
     <td><button class="btn btn-warning"  data-toggle="modal" data-target={'#'+book.id}>Edit</button>
-        <ShowModalBox id={book.id} imageurl={book.imageurl} title={book.booktitle} productid={book.productid} onChange={this.editBooks.bind(this)}/>
+        <ShowModalBox id={book.id} imageurl={book.image} title={book.bookname} productid={book.productid} onChange={this.editBooks.bind(this)}/>
     </td>
     <td><button onClick={()=>this.deleteBooks(book.id)} class="btn btn-danger">Delete</button></td>
     </tr>
@@ -75,7 +87,7 @@ export default class BookDisplay extends React.Component {
        <i class="material-icons">+</i>
        </button>
       <ShowAddModalBox onChange={this.addBook.bind(this)}/>
-      <input type="search" placeholder='Search Anything.............'/>
+      <input type="search" placeholder='Search Anything.............' onChange={this.searchClass.bind(this)}/>
     <DisplayBookLists bookList={bookList} />
     </div>
   )
