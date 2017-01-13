@@ -5,7 +5,8 @@
   "main": "webpack.config.js",
   "scripts": {
     "dev": "webpack-dev-server --host 0.0.0.0 --port 8085 --content-base src --inline --hot",
-    "start": "node server.js"
+    "build": "NODE_ENV=production webpack --config ./webpack.config.js --progress --colors",
+    "start": "node ./app.js"
   },
   "author": "",
   "license": "ISC",

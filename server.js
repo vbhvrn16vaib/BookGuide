@@ -1,19 +1,15 @@
-var express = require ('express');
+const path = require('path')
+const express = require('express')
 
-//create our app
-var app = express();
-const PORT = process.env.PORT || 3000;
+module.exports = {
+  app: function () {
+    const app = express()
+    const indexPath = path.join(__dirname, './src/index.html')
+    const publicPath = express.static(path.join(__dirname, './src'))
 
-app.use(function (req, res, next){
-  if(req.headers['x-forwarded-proto'] === 'http'){
-    next();
-  } else {
-     res.redirect('http://' + req.hostname +req.url);
+    app.use('/src', publicPath)
+    app.get('/', function (_, res) { res.sendFile(indexPath) })
+
+    return app
   }
-});
-
-app.use(express.static('public'));
-
-app.listen(PORT, function () {
-  console.log('express server is up on the port ' + PORT);
-});
+}
