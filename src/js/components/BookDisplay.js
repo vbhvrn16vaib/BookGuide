@@ -74,7 +74,10 @@ export default class BookDisplay extends React.Component {
     <td><button class="btn btn-warning"  data-toggle="modal" data-target={'#'+book.id}>Edit</button>
         <ShowModalBox id={book.id} imageurl={book.image} title={book.bookname} productid={book.productid} onChange={this.editBooks.bind(this)}/>
     </td>
-    <td><button onClick={()=>this.deleteBooks(book.id)} class="btn btn-danger">Delete</button></td>
+    <td>
+      <button class="btn btn-warning"  data-toggle="modal" data-target={'#delete'+book.id}>Delete</button>
+      <DeleteBook id={book.id} title={book.bookname} class={book.classes} image={book.image} onClick={this.deleteBooks.bind(this)} />
+     </td>
     </tr>
   )
 
