@@ -8,6 +8,7 @@ import {getBooksActions,deleteBooksActions,editBooksActions,addBookActions,findB
 import DisplayBookLists from "./layouts/displayBookLists";
 import ShowModalBox from "./layouts/showModalBox";
 import ShowAddModalBox from "./layouts/ShowAddModalBox";
+import DeleteBook from "./layouts/DeleteBook";
 
 @connect((store) => {
   return {
@@ -72,7 +73,8 @@ export default class BookDisplay extends React.Component {
     <td>&#x20B9; {book.price}</td>
     <td>{book.description}</td>
     <td><button class="btn btn-warning"  data-toggle="modal" data-target={'#'+book.id}>Edit</button>
-        <ShowModalBox id={book.id} imageurl={book.image} title={book.bookname} productid={book.productid} onChange={this.editBooks.bind(this)}/>
+        <ShowModalBox id={book.id} price={book.price} image={book.image} bookname={book.bookname} description={book.description} classes={book.classes} onChange={this.editBooks.bind(this)}/>
+
     </td>
     <td>
       <button class="btn btn-warning"  data-toggle="modal" data-target={'#delete'+book.id}>Delete</button>
